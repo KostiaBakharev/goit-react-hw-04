@@ -1,31 +1,31 @@
-import axios from "axios";
-
-const instance = axios.create({
-  baseURL: "https://api.unsplash.com/photos/",
-  params: {
-    client_id: "rgrjedvclkpWHPAbEoyQzd_v0Nz29kmKwMhIC5Ya8zE",
-    per_page: 12,
-    page: 1,
-    orientation: "landscape",
-  },
-});
-
-export const searchImages = (query) => {
-  return instance.get("", {
-    params: { query },
-  });
-};
 // import axios from "axios";
 
 // const instance = axios.create({
-//   baseURL: "https://pixabay.com/api/",
+//   baseURL: "https://api.unsplash.com",
 //   params: {
-//     key: "40997072-7d01e146641751499ce6c78c3",
+//     client_id: "rgrjedvclkpWHPAbEoyQzd_v0Nz29kmKwMhIC5Ya8zE",
 //     per_page: 12,
-//     image_type: "photo",
-//     orientation: "horizontal",
+//     orientation: "landscape",
 //   },
 // });
-// export const searchImages = (q, page = 1) => {
-//   return instance.get("", { params: { q, page } });
+
+// export const searchImages = (query, page = "1") => {
+//   return instance.get("/search/photos", {
+//     params: { ...instance.defaults.params, query, page },
+//   });
 // };
+
+import axios from "axios";
+
+const ACCES_KEY = "rgrjedvclkpWHPAbEoyQzd_v0Nz29kmKwMhIC5Ya8zE";
+
+export const instance = axios.create({
+  baseURL: "https://api.unsplash.com",
+});
+
+export const searchImages = async (query = "", page = 1) => {
+  const { data } = await instance.get(
+    `/search/photos?query=${query}&page=${page}&per_page=12&client_id=${ACCES_KEY}`
+  );
+  return data.results;
+};
