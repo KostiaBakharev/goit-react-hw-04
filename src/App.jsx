@@ -27,7 +27,7 @@ function App() {
       try {
         setIsLoading(true);
         const data = await searchImages(search, page);
-        if (data.length === 0) {
+        if (data?.length === 0) {
           toast.error("Sorry, there are no more images for your request", {
             position: "top-right",
             style: {

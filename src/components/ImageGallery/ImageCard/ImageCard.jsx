@@ -10,6 +10,7 @@ const ImageCard = ({ urls, alt_description, openModal }) => {
         src={urls.small}
         alt={alt_description}
         className={css.image}
+        title={alt_description}
       />
     </div>
   );
