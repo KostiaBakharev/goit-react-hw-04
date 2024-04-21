@@ -8,6 +8,7 @@ import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import Loader from "./components/Loader/Loader";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./components/ImageModal/ImageModal";
+import toast from "react-hot-toast";
 
 function App() {
   const [images, setImages] = useState(null);
@@ -18,6 +19,7 @@ function App() {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+
   //
   useEffect(() => {
     if (!search.length) return;
@@ -25,6 +27,15 @@ function App() {
       try {
         setIsLoading(true);
         const data = await searchImages(search, page);
+        if (data.length === 0) {
+          toast.error("Sorry, there are no more images for your request", {
+            position: "top-right",
+            style: {
+              fontSize: "23px",
+            },
+          });
+          return;
+        }
         setImages((prevImages) => {
           if (page === 1) return data;
           return [...prevImages, ...data];
@@ -50,7 +61,7 @@ function App() {
   //
   const openModal = (imageUrl) => {
     setSelectedImage(imageUrl);
-    console.log("Selected image:", imageUrl);
+    // console.log("Selected image:", imageUrl);
     setModalIsOpen(true);
   };
   //
